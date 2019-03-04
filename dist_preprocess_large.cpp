@@ -31,10 +31,9 @@ for (msi::iterator it = (c).begin(); it != (c).end(); it++)
 #define EPS 1e-6
 #define char_to_int(c)((int)c-(int)'A')
 #define MAX 500010
+
 bool contracted[MAX];
-//vi delNeighbors, orderPos, d_dist;                       //for edge difference and importance of nodes and dijkstra distance;
 int delNeighbors[MAX], orderPos[MAX], d_dist[MAX], hops[MAX];
-//vector<vii> AdjList, revAdjList;
 vii AdjList[MAX], revAdjList[MAX];
 int n, m, s, t;
 priority_queue<ii, vector<ii>, greater<ii>> d_pq, imp_pq;
@@ -134,11 +133,9 @@ void preprocess(){
         imp = 14*((AdjList[i].size()*revAdjList[i].size())-AdjList[i].size()-revAdjList[i].size()) + 25*(AdjList[i].size()+revAdjList[i].size());
         imp_pq.push(MP(imp, i));
     }
-    //cout<<imp_pq.size()<<endl;
     int u, u_imp, t_imp, cnt = 0;
     while(!imp_pq.empty()){
         u_imp = imp_pq.top().first; u = imp_pq.top().second; imp_pq.pop();
-        //cout<<u_imp<<" "<<u<<endl;
         t_imp = reCompute(u);
         if(imp_pq.size() != 0 && t_imp > imp_pq.top().first){
             imp_pq.push(MP(t_imp, u)); continue;
@@ -150,19 +147,12 @@ void preprocess(){
 }
 
 void init(){
-    //d_dist.assign(n+1, INF); delNeighbors.assign(n+1, 0); contracted.assign(n+1, 0); AdjList.assign(n+1, vii()); revAdjList.assign(n+1, vii()); orderPos.assign(n+1, 0);
     memset(delNeighbors, 0, sizeof(delNeighbors)); memset(contracted, 0, sizeof(contracted)); memset(orderPos, 0, sizeof(orderPos));
     int a, b, w;
     REP(i,1,m){
         cin>>a>>b>>w;
         AdjList[a].pb(MP(b,w)); revAdjList[b].pb(MP(a,w));
     }
-    /*REP(i,1,n){
-        cout<<i<<":";
-        int size = AdjList[i].size();
-        REP(j,0,size-1)cout<<" "<<AdjList[i][j];
-        cout<<endl;
-    }*/ //check graph.
     preprocess();
 }
 
@@ -170,14 +160,9 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    /*#ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-    #endif*/
     cin>>n>>m;
     init();
     cout<<"Ready"<<endl;
-    //REP(i,1,n)cout<<orderPos[i]<<" "; cout<<endl;
     int q;
     cin>>q;
     REP(i,1,q){
